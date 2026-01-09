@@ -1,16 +1,14 @@
-import { View, Text } from 'react-native'
-import React, { useEffect } from 'react'
+import React, { useEffect,FC } from 'react'
 import SplashScreen from 'react-native-splash-screen';
-import { Octicons } from '@react-native-vector-icons/octicons';
-import Login from './src/screens/login/Login.jsx';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
-const App = () => {
+import RootNavigator from "./src/navigations/StackNavigation/RootNavigator"
+const App:FC = () => {
   useEffect(()=>{
     SplashScreen.hide()
   },[])
   return (
   <SafeAreaProvider>
-    <Login/>
+    <RootNavigator/>
   </SafeAreaProvider>
   )
 }

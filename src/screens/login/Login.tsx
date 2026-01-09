@@ -8,14 +8,36 @@ import CustomButton from '../../components/CustomButton';
 import { Fonts } from '../../assets/fonts';
 import { images } from '../../assets/images';
 import { heightDP, widthDP } from '../../utils/Responsive';
-import { useState } from 'react';
+import React, { useState } from 'react';
 import BiometricBtn from '../../components/BiometricBtn';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import { StackProps } from '../../types/navigations';
 
-const Login = () => {
+const Login:React.FC<StackProps> = ({navigation}) => {
+
+  const[email,setEmail] = useState<string>("")
+  const[password,setPassword] = useState<string>("")
+
+  const authInputs=[
+    {
+      lable:"Email",
+      placeholder:"irfancs176@gmail.com",
+      mt:10,
+      mb:20,
+      secureText:false,
+      onChangeText:(e:string)=>setEmail(e)
+    },
+    {
+      lable:"Password",
+      placeholder:"Password",
+      mt:10,
+      mb:20,
+      secureText:true,
+      onChangeText:(e:string)=>setPassword(e)
+    }
+  ]
+
   return (
-    <ScreenWrapper paddingHorizontal={20}>
-      <SafeAreaView>
+    <ScreenWrapper >
         <Image
           source={images.resizeLogo}
           style={{
@@ -34,19 +56,19 @@ const Login = () => {
           align={'center'}
         />
 
+      { authInputs.map((item,key)=>(
         <CustomInput
-          label={'Email'}
-          placeholder={'irfan@gmail.com'}
-          mb={20}
-          mt={10}
+        key={key}
+
+          label={item.lable}
+          placeholder={item.placeholder}
+          mb={item.mb}
+          mt={item.mt}
+          secureText={item.secureText}
+          onChangeText={item.onChangeText}
         />
-        <CustomInput
-          label={'Password'}
-          placeholder={'Password'}
-          mb={20}
-          mt={10}
-          secureText
-        />
+      ))  }
+      
 
         <TouchableOpacity style={{ alignSelf: 'flex-end', marginBottom: 20 }}>
           <Text
@@ -63,8 +85,9 @@ const Login = () => {
 
         <BiometricBtn />
 
-        <CustomButton title={'Login'} mt={20} />
-      </SafeAreaView>
+        <CustomButton title={'Login'} mt={20} textColor={colors.black} onPress={()=>{
+          navigation.navigate("tabs")
+        }}/>
     </ScreenWrapper>
   );
 };
